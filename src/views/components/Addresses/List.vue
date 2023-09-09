@@ -8,6 +8,8 @@
                 <th>{{ $t('location') }}</th>
                 <th>{{ $t('city') }}</th>
                 <th>{{ $t('state') }}</th>
+                <th>{{ $t('createdAt') }}</th>
+                <th>{{ $t('updatedAt') }}</th>
                 <th class="text-right">{{ $t('actions') }}</th>
             </tr>
         </thead>
@@ -19,9 +21,12 @@
                 <td>{{ i.location }}</td>
                 <td>{{ i.city }}</td>
                 <td>{{ i.state }}</td>
+                <td>{{ i.createdAt | datetime }}</td>
+                <td>{{ i.updatedAt | datetime }}</td>
                 <td class="text-right">
                     <v-btn color="success" @click="$emit('setIndex', index)" small><v-icon small>mdi-pencil</v-icon></v-btn>
-                    <v-btn color="error" @click="$emit('setIndexDelete', index)" small class="ml-2"><v-icon small>mdi-delete</v-icon></v-btn>
+                    <v-btn color="error" @click="$emit('setIndexDelete', index)" small class="ml-2"><v-icon
+                            small>mdi-delete</v-icon></v-btn>
                 </td>
             </tr>
         </tbody>
@@ -35,9 +40,14 @@
 <script>
 export default {
     name: "ListAddresses",
-    data() {
-        return {
-
+    filters: {
+        datetime: function (value) {
+            if (value) {
+                const date = new Date(value).toISOString().split('T');
+                return date[0].split('-').reverse().join('/')+" "+date[1].substring(0,8)
+            } else {
+                return '--'
+            }
         }
     },
     computed: {

@@ -13,7 +13,7 @@ export default new Vuex.Store({
         }
     },
     getters: {
-        getAddressList: state => state.addressList,
+        getAddressList: state => state.addressList.sort((a, b) => b.createdAt - a.createdAt),
         getAddressByIndex: state => index => state.addressList[index],
         getAddressByZip: state => zip => state.addressList.find(e => {
             return e.zip == zip 

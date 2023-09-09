@@ -7,6 +7,8 @@
     "complement": "Complemento",
     "zip" : "CEP",
     "actions" : "Ações",
+    "createdAt" : "Criado em",
+    "updatedAt" : "Atualizado em",
     "invalidZip" : "O CEP informado é inválido.",
     "noItens" : "Nenhum registro encontardo",
     "checkZip" : "Verificar CEP",

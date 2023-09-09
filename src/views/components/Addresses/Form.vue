@@ -98,6 +98,9 @@ export default {
                 city: addressData ? addressData.localidade || addressData.city : '',
                 state: addressData ? addressData.uf || addressData.state : '',
             }
+            if (addressData && addressData.createdAt) {
+                this.addressData.createdAt = addressData.createdAt;
+            }
         },
         // Faz a busca do CEP no viacep
         async loadZipCode(zipCode) {
@@ -109,6 +112,9 @@ export default {
                 }
                 if (this.addressData.index) {
                     data.index = this.addressData.index;
+                }
+                if (this.addressData.createdAt) {
+                    data.createdAt = this.addressData.createdAt;
                 }
 
                 this.setAddressValues(data);
@@ -126,8 +132,10 @@ export default {
                 if (findCep) {
                     showSnackbarMessage(this.$t('alreadyRegisterip'), 'error')
                 } else {
-                    showSnackbarMessage(this.$t('registerItem'), 'success')
+                    this.addressData.createdAt = new Date();
+                    this.addressData.updatedAt = null;
                     this.$store.dispatch('storeAddress', this.addressData)
+                    showSnackbarMessage(this.$t('registerItem'), 'success')
                     this.open = false;
                 }
             } else {
@@ -144,8 +152,9 @@ export default {
         },
         // Grava as atualizações de CEP
         updateAddAddress() {
-            showSnackbarMessage(this.$t('updatedItem'), 'success')
+            this.addressData.updatedAt = new Date();
             this.$store.dispatch('updateAddress', this.addressData)
+            showSnackbarMessage(this.$t('updatedItem'), 'success')
             this.open = false;
         }
     },
